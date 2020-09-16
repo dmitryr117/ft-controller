@@ -1,0 +1,7 @@
+{
+  "rules": {
+    "no-console": [true, "debug", "time", "timeEnd", "trace"],
+    "directive-selector": [true, "attribute", "nx-trading", "camelCase"],
+    "component-selector": [true, "element", "nx-trading", "kebab-case"]
+  }
+}

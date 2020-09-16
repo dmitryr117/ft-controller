@@ -1,0 +1,42 @@
+{
+  "npmScope": "nx-trading",
+  "affected": {
+    "defaultBase": "master"
+  },
+  "implicitDependencies": {
+    "workspace.json": "*",
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    "tsconfig.base.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
+      }
+    }
+  },
+  "projects": {
+    "libs": {
+      "tags": []
+    },
+    "xplat": {
+      "tags": []
+    },
+    "web-ftcpanel": {
+      "tags": []
+    },
+    "web-ftcpanel-e2e": {
+      "tags": [],
+      "implicitDependencies": ["web-ftcpanel"]
+    },
+    "nest-api-trade": {
+      "tags": []
+    }
+  }
+}

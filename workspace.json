@@ -1,0 +1,254 @@
+{
+  "version": 1,
+  "projects": {
+    "libs": {
+      "root": "libs",
+      "sourceRoot": "libs",
+      "projectType": "library",
+      "prefix": "nx-trading",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "testing/jest.libs.config.js",
+            "tsConfig": "testing/tsconfig.libs.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "testing/test-setup.ts"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "testing/tsconfig.libs.json",
+              "testing/tsconfig.libs.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    },
+    "xplat": {
+      "root": "xplat",
+      "sourceRoot": "xplat",
+      "projectType": "library",
+      "prefix": "nx-trading",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "testing/jest.xplat.config.js",
+            "tsConfig": "testing/tsconfig.xplat.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "testing/test-setup.ts"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "testing/tsconfig.xplat.json",
+              "testing/tsconfig.xplat.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    },
+    "web-ftcpanel": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/web-ftcpanel",
+      "sourceRoot": "apps/web-ftcpanel/src",
+      "prefix": "nx-trading",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/web-ftcpanel",
+            "index": "apps/web-ftcpanel/src/index.html",
+            "main": "apps/web-ftcpanel/src/main.ts",
+            "polyfills": "apps/web-ftcpanel/src/polyfills.ts",
+            "tsConfig": "apps/web-ftcpanel/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/web-ftcpanel/src/favicon.ico",
+              "apps/web-ftcpanel/src/assets"
+            ],
+            "styles": [
+              "xplat/web/scss/_index.scss",
+              "apps/web-ftcpanel/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/web-ftcpanel/src/environments/environment.ts",
+                  "with": "apps/web-ftcpanel/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "web-ftcpanel:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "web-ftcpanel:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "web-ftcpanel:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/web-ftcpanel/tsconfig.app.json",
+              "apps/web-ftcpanel/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/web-ftcpanel/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/web-ftcpanel/jest.config.js",
+            "tsConfig": "apps/web-ftcpanel/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/web-ftcpanel/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "web-ftcpanel-e2e": {
+      "root": "apps/web-ftcpanel-e2e",
+      "sourceRoot": "apps/web-ftcpanel-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/web-ftcpanel-e2e/cypress.json",
+            "tsConfig": "apps/web-ftcpanel-e2e/tsconfig.e2e.json",
+            "devServerTarget": "web-ftcpanel:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "web-ftcpanel:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/web-ftcpanel-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/web-ftcpanel-e2e/**/*"]
+          }
+        }
+      }
+    },
+    "nest-api-trade": {
+      "root": "apps/nest-api-trade",
+      "sourceRoot": "apps/nest-api-trade/src",
+      "projectType": "application",
+      "prefix": "nest-api-trade",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/nest-api-trade",
+            "main": "apps/nest-api-trade/src/main.ts",
+            "tsConfig": "apps/nest-api-trade/tsconfig.app.json",
+            "assets": ["apps/nest-api-trade/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/nest-api-trade/src/environments/environment.ts",
+                  "with": "apps/nest-api-trade/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "nest-api-trade:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "apps/nest-api-trade/tsconfig.app.json",
+              "apps/nest-api-trade/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/nest-api-trade/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/nest-api-trade/jest.config.js",
+            "tsConfig": "apps/nest-api-trade/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nstudio/xplat"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "nest-api-trade"
+}
